@@ -1,0 +1,62 @@
+body {
+  background-color: rgb(35, 51, 76);
+  color: white;
+}
+
+button {
+  background-color: rgb(57, 75, 104);
+}
+
+button:hover {
+  background-color: rgb(24, 35, 52);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: rgb(102, 102, 153);
+}
+
+select {
+  background-color: rgb(57, 75, 104);
+  color: white;
+}
+
+td {
+  padding: 2px;
+}
+
+.title {
+  font-size: xx-large;
+}
+
+.github {
+  width: auto;
+  float: right;
+}
+
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.alert {
+  position: relative;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-radius: .25rem;
+}
+
+.danger {
+  color: rgb(255, 0, 0);
+}
+
+.warning {
+  color: rgb(255, 128, 0);
+}
