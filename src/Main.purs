@@ -1,43 +1,26 @@
 module Main where
 
 import Prelude
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE)
 import Data.Maybe (fromJust)
-import DOM (DOM)
-import DOM.HTML (window)
-import DOM.HTML.Types (Window, htmlDocumentToDocument)
-import DOM.HTML.Window (document)
-import DOM.Node.NonElementParentNode (getElementById)
-import DOM.Node.Types (Element, ElementId(..), NonElementParentNode, documentToNonElementParentNode)
+import Effect (Effect)
 import Partial.Unsafe (unsafePartial)
-import React (ReactElement, ReactState, ReadWrite, createFactory)
-import React.DOM as D
+import React as R
 import ReactDOM (render)
-import Graphics.Canvas (CANVAS)
+import Web.DOM.NonElementParentNode (getElementById)
+import Web.HTML (window)
+import Web.HTML.HTMLDocument (toNonElementParentNode)
+import Web.HTML.Window (document)
 
 import Decosim.UI (panel)
 
-type E = ( canvas  :: CANVAS
-         , console :: CONSOLE
-         , dom     :: DOM
-         , state   :: ReactState ReadWrite
-         )
-
-main :: Eff E Unit
+main ∷ Effect Unit
 main = do
-    win    <- window
-    doc    <- document win
-    let parentNode = documentToNonElementParentNode (htmlDocumentToDocument doc)
-    elm    <- elm' parentNode
-    ui'    <- ui win
-    void $ render ui' elm
+    win    ← window
+    doc    ← document win
+    let parentNode = toNonElementParentNode doc
+    elm    ← elm' parentNode
+    void $ render (R.createLeafElement (panel win) {}) elm
   where
-    ui :: Window -> Eff E ReactElement
-    ui win = do
-         ip <- panel win
-         pure $ D.div [] [ createFactory ip unit]
-    elm' :: NonElementParentNode -> Eff E Element
     elm' parentNode = do
-      elm <- getElementById (ElementId "main") parentNode
+      elm ← getElementById "main" parentNode
       pure $ unsafePartial fromJust elm

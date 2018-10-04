@@ -3,17 +3,17 @@ module Decosim.Sim.DiveTables
   ) where
 
 import Prelude
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
+import Effect (Effect)
+import Effect.Console (log)
 import Data.Array ((..))
-import Data.Int as I
 import Data.Foldable (for_)
+import Data.Int as I
 
-import Decosim.Sim.Types (Meters(Meters))
 import Decosim.Sim.HaldaneanModel
+import Decosim.Sim.Types (Meters(Meters))
 
 
-printDiveTables :: forall e. Eff (console :: CONSOLE | e) Unit
+printDiveTables ∷ Effect Unit
 printDiveTables = do
     diveTable Air
     diveTable NitroxI
@@ -25,7 +25,7 @@ printDiveTables = do
     diveTable gasMix = do
       log $ "\nDiveTable " <> show gasMix
       let model = initModel { gasMix = gasMix }
-      for_ (0..20) \i -> do
+      for_ (0..20) \i → do
         let depth = Meters $ 5.0 * I.toNumber i
         if depth <= maxOperatingDepth gasMix
           then do let timeMins = noDecoTimeAtDepth model depth

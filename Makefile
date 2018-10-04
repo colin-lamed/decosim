@@ -3,20 +3,20 @@ all: build
 setup:
 	set -e
 	npm install
-	bower install
+	psc-package build
 
-build: setup
-	npm run -s build
+build: #setup
+	npm run build
 
-test: setup
-	npm run -s test
+test: #setup
+	npm run test
 
 # since `test` is also a directory, it will not be built without this
 # (or `make -B test`):
 .PHONY: test
 
 clean:
-	npm run -s clean
+	npm run clean
 
 zip-src:
 	rm -f decosim-ps.zip

@@ -7,4 +7,4 @@
 /.psc*
 /.purs*
 /.psa*
-/public/dist
+/public/js/Main.js

@@ -1,0 +1,25 @@
+{
+  "name": "decosim",
+  "set": "psc-0.12.0-20180901",
+  "source": "https://github.com/purescript/package-sets.git",
+  "depends": [
+    "prelude",
+    "aff",
+    "assert",
+    "canvas",
+    "console",
+    "debug",
+    "foreign",
+    "functors",
+    "js-timers",
+    "now",
+    "numbers",
+    "parsing",
+    "profunctor",
+    "react-dom",
+    "refs",
+    "transformers",
+    "web-html",
+    "web-uievents"
+  ]
+}

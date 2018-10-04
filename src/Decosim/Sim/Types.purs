@@ -2,41 +2,74 @@ module Decosim.Sim.Types
   ( Meters(..)
   , Bar(..)
   , He, N2, O2
-  , extract
+  , class ToNumber
+  , toNumber
   ) where
 
 import Prelude
-import Data.Functor.Tagged (untagged)
+import Data.Tagged (Tagged, untag)
 import Data.Newtype (class Newtype, unwrap)
 import Data.Time.Duration (Minutes)
+
 
 -- Meters
 
 newtype Meters = Meters Number
-derive instance newtypeMeters :: Newtype Meters _
-derive newtype instance eqMeters       :: Eq Meters
-derive newtype instance ordMeters      :: Ord Meters
-derive newtype instance semiringMeters :: Semiring Meters
-derive newtype instance ringMeters     :: Ring Meters
+derive         instance newtypeMeters ∷ Newtype Meters _
+derive newtype instance eqMeters      ∷ Eq Meters
+derive newtype instance ordMeters     ∷ Ord Meters
 
-instance showMeters :: Show Meters where
+instance semigroupMeters ∷ Semigroup Meters where
+  append (Meters x) (Meters y) = Meters (x + y)
+
+instance monoidMeters ∷ Monoid Meters where
+  mempty = Meters 0.0
+
+instance showMeters ∷ Show Meters where
   show (Meters n) = "(Meters " <> show n <> ")"
 
 -- Bar
 
 newtype Bar = Bar Number
-derive instance newtypeBar :: Newtype Bar _
-derive newtype instance eqBar            :: Eq Bar
-derive newtype instance ordBar           :: Ord Bar
-derive newtype instance semiringBar      :: Semiring Bar
-derive newtype instance ringBar          :: Ring Bar
+derive         instance newtypeBar ∷ Newtype Bar _
+derive newtype instance eqBar      ∷ Eq Bar
+derive newtype instance ordBar     ∷ Ord Bar
 
-instance showBar :: Show Bar where
+instance semigroupBar ∷ Semigroup Bar where
+  append (Bar x) (Bar y) = Bar (x + y)
+
+instance monoidBar ∷ Monoid Bar where
+  mempty = Bar 0.0
+
+instance showBar ∷ Show Bar where
   show (Bar n) = "(Bar " <> show n <> ")"
 
+-- Tags
 
 data He
 data N2
 data O2
 
-extract = unwrap <<< untagged
+
+-- toNumber
+
+class ToNumber a where
+  toNumber ∷ a → Number
+
+instance toNumberMeters ∷ ToNumber Meters where
+  toNumber = unwrap
+
+instance toNumberBar ∷ ToNumber Bar where
+  toNumber = unwrap
+
+instance toNumberMinutes ∷ ToNumber Minutes where
+  toNumber = unwrap
+
+instance toNumberTaggedNumber ∷ ToNumber (Tagged t Number) where
+  toNumber = untag
+
+instance toNumberTaggedBar ∷ ToNumber (Tagged t Bar) where
+  toNumber = unwrap <<< untag
+
+instance toNumberTaggedMinutes ∷ ToNumber (Tagged t Minutes) where
+  toNumber = unwrap <<< untag
