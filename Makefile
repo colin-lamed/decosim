@@ -3,7 +3,7 @@ all: build
 setup:
 	set -e
 	npm install
-	psc-package build
+	npm run setup
 
 build: #setup
 	npm run build
