@@ -137,7 +137,7 @@ renderPanel win this sim =
                                                             , D.text "Deco Sim"
                                                             ]
                              , D.td [ P.colSpan 2 ] [ ]
-                             , D.td [ P.className "github" ] [ D.a [ P.href "https://github.com/colin-passiv/decosim"]
+                             , D.td [ P.className "github" ] [ D.a [ P.href "https://github.com/colin-lamed/decosim"]
                                                                    [ D.img [ P.src "img/GitHub-Mark-Light-32px.png"]
                                                                    , D.img [ P.src "img/GitHub_Logo_White.png"
                                                                            , P.height "32", P.alt "GitHub"
